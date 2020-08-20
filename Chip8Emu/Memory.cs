@@ -26,30 +26,30 @@ namespace Chip8Emu
             0xF0,0x80,0xF0,0x80,0x80
         };
         
-        private readonly ushort[] HEX_CHAR_ADDR =
+        public static readonly ushort[] HEX_CHAR_ADDR =
         {
-            0xFAF,
-            0xFB4,
-            0xFB9,
-            0xFBE,
-            0xFC3,
-            0xFC8,
-            0xFCD,
-            0xFD2,
-            0xFD7,
-            0xFDC,
-            0xFE1,
-            0xFE6,
-            0xFEB,
-            0xFF0,
-            0xFF5,
-            0xFFA
+            0x1AF,
+            0x1B4,
+            0x1B9,
+            0x1BE,
+            0x1C3,
+            0x1C8,
+            0x1CD,
+            0x1D2,
+            0x1D7,
+            0x1DC,
+            0x1E1,
+            0x1E6,
+            0x1EB,
+            0x1F0,
+            0x1F5,
+            0x1FA
         };
 
         public Memory()
         {
             ram = new byte[0xFFF];
-            Array.Copy(HEX_CHARS,0,ram,0xFAF,80);
+            Array.Copy(HEX_CHARS,0,ram,0x1AF,80);
         }
 
         public byte readByte(ushort addr)

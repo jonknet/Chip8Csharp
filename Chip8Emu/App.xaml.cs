@@ -21,42 +21,37 @@ namespace Chip8Emu
             Keypad keypad = new Keypad();
             CPU cpu = new CPU(mem,vram,keypad);
             
-            var path = @"C:\Users\Commvault\RiderProjects\Chip8Emu\Chip8Emu\IBM Logo.ch8";
+            var path = @"C:\Users\Commvault\RiderProjects\Chip8Emu\Chip8Emu\Pong (1 Player).ch8";
             
             Loader.Load(path,mem);
             
             var gWind = new GameWindow();
 
-            for(int i = 0; i < 32; i++)
-            {
-                gWind.drawPixel(0,i, true);
-            }
-            gWind.updateWindow();
-            
             // Main Loop
             while(!keypad.quitReceived){
                 keypad.pollKeyState();
                 
-                cpu.executeNext();
+                if(!keypad.pause){
+                    cpu.executeNext();
 
-                if(vram.change)
-                {
-                    for(int i = 0; i < 32; i++)
+                    if(vram.change)
                     {
-                        for(int j = 0; j < 64; j++)
+                        for(int i = 0; i < 32; i++)
                         {
-                            if(vram.getPixel(j,i) == 1)
-                                gWind.drawPixel(j,i, true);
-                            else
-                                gWind.drawPixel(j,i,false);
+                            for(int j = 0; j < 64; j++)
+                            {
+                                if(vram.getPixel(j,i) == 1)
+                                    gWind.drawPixel(j,i, true);
+                                else
+                                    gWind.drawPixel(j,i,false);
+                            }
                         }
+                        vram.change = false;
                     }
-                    vram.change = false;
                 }
-                
                 gWind.updateWindow();
                 
-                Thread.Sleep(50);
+                Thread.Sleep(16);
             }
             
             this.Shutdown();

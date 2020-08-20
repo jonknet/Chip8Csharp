@@ -6,20 +6,12 @@ namespace Chip8Emu
 {
     public class Keypad
     {
-        private readonly Key[] keyMap =
-        {
-            Key.D0, Key.D1, Key.D2, Key.D3,
-            Key.D4, Key.D5, Key.D6, Key.D7,
-            Key.D8, Key.D9, Key.A, Key.B,
-            Key.C, Key.D, Key.E, Key.F
-        };
-
         private bool[] keyStateDown = new bool[16];
 
         private bool waitForInput = false;
-        private Key lastKeyPressed;
-        
+        private byte lastKeyPressed = 0xFF;
         public bool quitReceived = false;
+        public bool pause = false;
         
         private void clearKeyStates()
         {
@@ -32,99 +24,102 @@ namespace Chip8Emu
         public void pollKeyState()
         {
             clearKeyStates();
+            lastKeyPressed = 0xFF;
             if(Keyboard.IsKeyDown(Key.D1))
             {
                 keyStateDown[1] = true;
+                lastKeyPressed = 1;
             } else if(Keyboard.IsKeyDown(Key.D2))
             {
                 keyStateDown[2] = true;
+                lastKeyPressed = 2;
             } else if(Keyboard.IsKeyDown(Key.D3))
             {
                 keyStateDown[3] = true;
+                lastKeyPressed = 3;
             } else if(Keyboard.IsKeyDown(Key.D4))
             {
                 keyStateDown[0xC] = true;
+                lastKeyPressed = 0xC;
             } else if(Keyboard.IsKeyDown(Key.Q))
             {
                 keyStateDown[4] = true;
+                lastKeyPressed = 4;
             } else if(Keyboard.IsKeyDown(Key.W))
             {
                 keyStateDown[5] = true;
+                lastKeyPressed = 5;
             } else if(Keyboard.IsKeyDown(Key.E))
             {
                 keyStateDown[6] = true;
+                lastKeyPressed = 6;
             } else if(Keyboard.IsKeyDown(Key.R))
             {
                 keyStateDown[0xD] = true;
+                lastKeyPressed = 0xD;
             } else if(Keyboard.IsKeyDown(Key.A))
             {
                 keyStateDown[7] = true;
+                lastKeyPressed = 7;
             } else if(Keyboard.IsKeyDown(Key.S))
             {
                 keyStateDown[8] = true;
+                lastKeyPressed = 8;
             } else if(Keyboard.IsKeyDown(Key.D))
             {
                 keyStateDown[9] = true;
+                lastKeyPressed = 9;
             } else if(Keyboard.IsKeyDown(Key.F))
             {
                 keyStateDown[0xE] = true;
+                lastKeyPressed = 0xE;
             } else if(Keyboard.IsKeyDown(Key.Z))
             {
                 keyStateDown[0xA] = true;
+                lastKeyPressed = 0xA;
             } else if(Keyboard.IsKeyDown(Key.X))
             {
                 keyStateDown[0] = true;
+                lastKeyPressed = 0;
             } else if(Keyboard.IsKeyDown(Key.C))
             {
                 keyStateDown[0xB] = true;
+                lastKeyPressed = 0xB;
             } else if(Keyboard.IsKeyDown(Key.V))
             {
                 keyStateDown[0xF] = true;
+                lastKeyPressed = 0xF;
             } 
+            
+            if(lastKeyPressed != 0xFF)
+            {
+                Console.WriteLine("Last Key Pressed: " + lastKeyPressed);
+            }
             
             if(Keyboard.IsKeyDown(Key.P))
             {
                 quitReceived = true;
             }
-        }
-
-        public void keyDown(Key k)
-        {
-            Console.WriteLine("keyDown " + k);
-            if ((int) k > 33 && (int) k < 50)
+            
+            if(Keyboard.IsKeyDown(Key.B))
             {
-                waitForInput = false;
-                lastKeyPressed = k;
-                keyStateDown[(int) k - 34] = true;
+                pause = true;
             }
-        }
-
-        public void keyUp(Key k)
-        {
-            waitForInput = false;
-            Console.WriteLine("keyUp " + k);
-            if ((int) k > 33 && (int) k < 50)
+            
+            if(Keyboard.IsKeyDown(Key.N))
             {
-                waitForInput = false;
-                lastKeyPressed = k;
-                keyStateDown[(int) k - 34] = false;
-            }          
+                pause = false;
+            }
         }
 
         public bool getKeyState(byte k)
         {
             return keyStateDown[k];
         }
-
-        public byte waitForKey()
+        
+        public byte getCurrentPressedKey()
         {
-            waitForInput = true;
-            while (waitForInput)
-            {
-                // wait here
-            }
-
-            return (byte)(lastKeyPressed - 34);
+            return lastKeyPressed;
         }
     }
 }
