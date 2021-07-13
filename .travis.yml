@@ -1,14 +1,9 @@
 addons:
   sonarcloud:
-    organization: "jonknet"
-    token:
-      secure: "YwHReOauOymA1pSBmdBFzfO8zFhA+BBubmObpQrne9pAyC8TSUQDir/6AynW2wp6z03QCYoZrPN1ZfAB8K5TCJOWwSMPYCPp38iRNT5rDWXttiSMglI/S+2eLyihB/mtHDd+7O/NpYntwvBJKgtwC0scVhWA1T6zAe9Ts6v6l7SaGJCCzv4FpfTxdUKRN8AniJgyY2wWtbxA864KpqhMYhrpMbJJ2HEnAyEOvkPFlQP0ef8HYdXxptsYno664DkRSiqggjD6S6AN5r6BGbB0xRUeSkE6Anf+lWHkrKirGywfhi4KuMpzaKvGIEsHj6sTuvkMZGnUCbE9DGOUZfO4kqKRm8w7kNE66P42Sa3EjU0QnmY20l+s1Q+rqimWhLjzlKqlO12Es7dYit6UXlNPjzv2kG1hnBCaYJLEF7q0CRtFNqm07R1KDAKHw/MoviFFbsaF2Ni0kTXmHrpRm9LrZi/coDpzDVT2Lj8cxk2Zj7weY/4/yAfpp+Se99m4EBLAr+AIAEH4HXS6ptolLMJ4M/zlVgyqn2hKfpX4o/Ci2k/MX8dYSBehXOq1SdpK/nyUEqxRuxCAZQnGFEbldyEz4L1yRWJMB5e72BQxz5+zm8ZnItkdOOkAVXWVbjdq3pwhchBS9jDOsYEaZojNWiZoi+baiPsmX70YTPEW+ZLesKg=" # encrypted value of your token
-
+    organization: jonknet
 script:
-  # Wraps the compilation with the Build Wrapper to generate configuration (used
-  # later by the SonarScanner) into the "bw-output" folder
-  - build-wrapper-linux-x86-64 --out-dir bw-output <your clean build command>
-  # And finally run the SonarCloud analysis - read the "sonar-project.properties"
-  # file to see the specific configuration
-  - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
-
+- build-wrapper-linux-x86-64 --out-dir bw-output <your clean build command>
+- sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output -Dsonar.user=382245ab514e64d56037386e8ccd9aebfa83cece
+env:
+  global:
+    secure: UZAj7ye99yZ0EHnBjRbywGRPjOTwQFTjOWfZxbiaGrbiBMJNWkC5e7nOKoTVh/AIMZhemkziJfhvrSjt6BC1taPgH8pbdZ7EinhamT8W8yIyG5Xqw0db9sg69jvrY1ERG4DAEw+tRlKxMSDlrNT2L3Rd/WnhX0LUkAB8/YP0G1JqlMNPnoaYB3CEgNXyVyu6PgMztovQPsqsEVbWhwx+l9gd9tmeugYYDkNg8mfO2+NPcep4ZDyj8Sql+e4rbtvPL7ray4bM5vovTfjyvIxZ18gusN+dg2iAFSp7uwWZ5LDBa3ID8eKPUTPDNNh68TWqgr4Ljm4XrykJZ5acjs3kpp+cdgqYx7ynnsjbRF/IvNvj+9C0Hl5LDaGZGfLhP5XG8M2e9pg5Y2v1KrZCysmiXhjIMHD5OFqXlGd3uwxANA+cCusEJ3eozaK4Btf5D8T3ro8koKAB8+BccQDR4Sg1F8JtjTZAicsSo+PxRehcvPtXXGx9n9YRMZ5vhWNE1KOGfeTHVbkHe3LkVv/L4wcX59QRhbrAlCcDw3/ZqmxgXR4Pn3YkG3VgKNnEny0yzJEp13Wyp6YMp1q0JEr0x3A9l+ij540AcQtO56mCqc9/qwVCjr/VA4lTAY4/78v0lfInb9p/ESjwLT2AUi0Tc7MLwC41mWlfWzjl96/e67Lx13I=
