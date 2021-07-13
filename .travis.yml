@@ -2,7 +2,11 @@ addons:
   sonarcloud:
     organization: "jonknet" # the key of the org you chose at step #3
     token:
-      secure: "382245ab514e64d56037386e8ccd9aebfa83cece" # encrypted value of your token
+      secure: "IpgzhKHJUAotAN7krCYPgLT9lEOIHmXdcXYcTU5/mE6YSvrcK5dw2aCjaF8HFSWQEX+9o6G6VuEuVjofkwML8OwmiY5lo2ZmLNI45H0RSHdJw5b03yASnJpPr/kQrQOT7Imn1U2IpRClWqK9tYkx77QXVts078qa7GdeO9AaHcb4HLz/bkIRUwky0c48rJPihOCqpGnfhMFMPvrVjXOBOJMAZVCEER1c2J/fyAYlK6e0lp7MlFvU7tu8L25OcUaf5u/cZYae5N+BDyyNHmpqfuk1W8fMvzFwydFSvoYG8XJMxVVZukVqtTC2W7gTYmf3aSeEbhMEsj9c3vYReaGSr8gsAnyT9kVTnWBx0VLJuICaODYlhawNxUw3ir7c/Nc7RexYKFT4sb9O6t+peIpLhTQtdwhQMT7+bzealTmJ+HW9wkRVuJczJ0Qkw8sLpAP2hk+A4B+4rFs4xt3DcebwE2gAKw+fU2dJhHeFBO6ECY5Vw0nErLEW23UP/NKlK/TVzAzxElJy8Z5I/uKWhVGKsE4wwhWgGKzH7ap9auQxLRx51lVdUbzRpREEvFlVQyKPrF0bojupalY87VqNmt/VCoG1kT4GlIKAjf/2y/pRx4y4jEEtqZmIBcJprA5dDq1FurpKispjsht6OdpogMihdxOpIrn6FQEN9+mOh+ybGaw=" # encrypted value of your token
 script:
-  # other script steps might be done before running the actual analysis
-  - sonar-scanner
+  # Wraps the compilation with the Build Wrapper to generate configuration (used
+  # later by the SonarScanner) into the "bw-output" folder
+  - build-wrapper-linux-x86-64 --out-dir bw-output
+  # And finally run the SonarCloud analysis - read the "sonar-project.properties"
+  # file to see the specific configuration
+  - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
